@@ -8,16 +8,14 @@
     "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-
   "repository": "https://github.com/tabless-thursday-4-15-2019/Backend-Itel",
   "author": "ItelSunday <iteldomingotech@gmail.com>",
   "license": "MIT",
-
   "dependencies": {
     "express": "^4.16.4",
-    "helmet": "^3.16.0"
+    "helmet": "^3.16.0",
+    "knex": "^0.16.5"
   },
-  
   "devDependencies": {
     "nodemon": "^1.18.11"
   }
