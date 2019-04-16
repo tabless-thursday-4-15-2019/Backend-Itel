@@ -20,9 +20,10 @@ router.post('/register', (req, res) => {
     ? res.status(400).json({ error: 'Username & Password Required'})
     : 
     Users
-        .addUser(req.body)
+        .addUser(user)
         .then(user => {
             const token = generateToken(user);
+            console.log(user);
             res.status(201).json({user, token})
         })
         .catch(err => {

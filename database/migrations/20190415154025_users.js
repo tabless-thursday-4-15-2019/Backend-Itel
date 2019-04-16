@@ -1,5 +1,6 @@
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('users', tbl => {
+      
       //Primary key
       tbl
         .increments()
@@ -16,7 +17,7 @@ exports.up = function (knex, Promise) {
       tbl
         .string('email', 255);
       tbl
-        .string('phone', 128)
+        .string('phone', 10)
         .notNullable();
     });
   };

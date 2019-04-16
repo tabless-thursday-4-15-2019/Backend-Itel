@@ -6,12 +6,16 @@ module.exports = {
     findBy
 }
 
-function addUser(user) {
-    return db('users')
-    .insert(user)
-    .then(ids => {
-        return getUser(ids[0]);
-    })
+async function addUser(user) {
+    const {id} = await db('users')
+    .insert(user).returning('id');
+        
+    const users = await getUser(id)
+    return users;
+    
+    // .then(ids => {
+    //     return getUser(ids[0]);
+    // })
 }
 
 function getUser(id) {
