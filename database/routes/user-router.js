@@ -9,16 +9,6 @@ const Users = require('../models/user-model')
 
 const db = require('../dbConfig')
 
-function generateToken(user) {
-  const secret = jwtKey;
-  const payload = {
-    username: user.username,
-  };
-  const options = {
-    expiresIn: '1d',
-  };
-  return jwt.sign(payload, secret, options);
-}
 
 router.post('/register', (req, res) => {
 
