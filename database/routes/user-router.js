@@ -3,12 +3,11 @@ const router = express.Router();
 
 const bcrypt = require('bcryptjs');
 
-
-const { authenticate, generateToken } = require('../auth/authenticate');
+const { authenticate, generateToken } = require('../../auth/authenticate');
 
 const Users = require('../models/user-model')
 
-const db = require('../database/dbConfig')
+const db = require('../dbConfig')
 
 function generateToken(user) {
   const secret = jwtKey;
