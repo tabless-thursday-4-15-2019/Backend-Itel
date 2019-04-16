@@ -3,8 +3,15 @@ module.exports = {
     development: {
       client: 'sqlite3',
       connection: {
-        filename: './user.sqlite3'
+        filename: './stash.db3'
       },
       useNullAsDefault: true,
+      migrations: {
+        directory: './database/migrations'
+      },
+      seeds: {
+        directory: './database/seeds'
+      }
+      
     },
   };
