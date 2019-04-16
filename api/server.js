@@ -16,8 +16,8 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
-server.use('/api/user', usersRouter);
-server.use('/api/tabs', tabsRouter);
+server.use('/api', userRouter);
+server.use('/tabs', tabsRouter);
 
 server.get('/', (req, res) => {
   res.send('Sanity Check!');

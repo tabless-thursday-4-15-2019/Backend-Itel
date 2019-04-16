@@ -10,6 +10,17 @@ const Users = require('../models/user-model')
 
 const db = require('../database/dbConfig')
 
+function generateToken(user) {
+  const secret = jwtKey;
+  const payload = {
+    username: user.username,
+  };
+  const options = {
+    expiresIn: '1d',
+  };
+  return jwt.sign(payload, secret, options);
+}
+
 router.post('/register', (req, res) => {
 
     let user = req.body
@@ -17,7 +28,7 @@ router.post('/register', (req, res) => {
     user.password = hash;
 
     !user.username || !user.password
-    ? res.status(400).json({ error: 'Please Provide a Username & Password'})
+    ? res.status(400).json({ error: 'Username & Password Required'})
     : 
     Users
         .addUser(req.body)
