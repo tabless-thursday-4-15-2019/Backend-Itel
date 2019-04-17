@@ -15,7 +15,7 @@ router.post('/register', (req, res) => {
     let user = req.body
     const hash = bcrypt.hashSync(user.password, 10);
     user.password = hash;
-
+    // console.log(user);
     !user.username || !user.password
     ? res.status(400).json({ error: 'Username & Password Required'})
     : 
@@ -23,36 +23,36 @@ router.post('/register', (req, res) => {
         .addUser(user)
         .then(user => {
             const token = generateToken(user);
-            console.log(user);
-            res.status(201).json({user, token})
+            // console.log(token);
+            res.status(200).json({...user, token})
         })
         .catch(err => {
-            res.status(505).json(err)
+            res.status(500).json(err)
         })
 })
 
 router.post('/login', (req, res) => {
 
-    let { username, password } = req.body;
-  
-  Users.findBy({ username })
-      .first()
-      .then(user => {
-        if (user && bcrypt.compareSync(password, user.password)) {
-        const token = generateToken(user);
-  
-          res.status(200).json({
-            message: `Welcome ${user.username}!`,
-            token,
-          });
-        } else {
-          res.status(401).json({ message: 'Invalid Credentials' });
-        }
-      })
-      .catch(error => {
-        res.status(500).json(error);
-      });
-  
+  let { username, password } = req.body;
+
+Users.findBy({ username })
+    .first()
+    .then(user => {
+      if (user && bcrypt.compareSync(password, user.password)) {
+      const token = generateToken(user);
+
+        res.status(200).json({
+          message: `Welcome ${user.username}!`,
+          token,
+        });
+      } else {
+        res.status(400).json({ message: 'Invalid Credentials' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+
 });
 
 router.get('/:id/tabs', authenticate, (req, res) => {
@@ -66,5 +66,30 @@ router.get('/:id/tabs', authenticate, (req, res) => {
       })
       .catch(err  => res.status(500).json(err))
   })
+
+  router.get('/:id', (req, res) => {
+    const { id } = req.params
+    Users
+    .getUser(id)
+    .then(user => {
+        res.status(200).json(user);
+    })
+    .catch(error => {
+        res.status(500).json(error);
+    })
+})
+
+router.get('/:id/tabs', authenticate, (req, res) => {
+    const id = req.params.id
+    db('users')
+      .where({id})
+      .then(user => {
+        db('tabs')
+          .where({user_id: id})
+          .then(tabs => res.status(200).json({...user[0], tabs}))
+      })
+      .catch(err  => res.status(500).json(err))
+  })
+
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const localPg = {
   host: 'localhost',
-  database: 'tabs',
+  database: 'stash',
   user: 'tabber',
   password: 'pass'
 }

@@ -18,22 +18,22 @@ function getById(id) {
     .first();
 }
 
-function insert(tabs) {
+function insert(habit) {
   return db('tabs')
-    .insert(tabs)
+    .insert(habit)
     .then(ids => {
       return getById(ids[0]);
     });
 }
 
 function update(id, changes) {
-  return db('users')
+  return db('tabs')
     .where({ id })
     .update(changes);
 }
 
 function remove(id) {
-  return db('users')
+  return db('tabs')
     .where('id', id)
     .del();
 }
