@@ -38,12 +38,15 @@ router.post('/login', (req, res) => {
 Users.findBy({ username })
     .first()
     .then(user => {
+      //console.log(user);
       if (user && bcrypt.compareSync(password, user.password)) {
       const token = generateToken(user);
+      //console.log(user);
 
         res.status(200).json({
           message: `Welcome ${user.username}!`,
           token,
+          
         });
       } else {
         res.status(400).json({ message: 'Invalid Credentials' });
@@ -54,6 +57,13 @@ Users.findBy({ username })
     });
 
 });
+router.get('/users', (req, res) => {
+  db('users').then(user => {
+    return res.status(200).json(user);
+  })
+  .catch(err  => res.status(500).json(err))
+} )
+
 
 router.get('/:id/tabs', authenticate, (req, res) => {
     const id = req.params.id
