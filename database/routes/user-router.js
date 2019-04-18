@@ -9,7 +9,7 @@ const Users = require('../models/user-model')
 
 const db = require('../dbConfig')
 
-
+//POST /register
 router.post('/register', (req, res) => {
 
     let user = req.body
@@ -30,7 +30,7 @@ router.post('/register', (req, res) => {
             res.status(500).json(err)
         })
 })
-
+//POST /login
 router.post('/login', (req, res) => {
   //console.log(req.body); // returns username and password
   let { username, password } = req.body;
@@ -55,6 +55,8 @@ router.post('/login', (req, res) => {
     });
 
 });
+
+//GET ALL /users
 router.get('/users', (req, res) => {
   db('users').then(user => {
     return res.status(200).json(user);
@@ -62,31 +64,21 @@ router.get('/users', (req, res) => {
   .catch(err  => res.status(500).json(err))
 } )
 
-
-router.get('/:id/tabs', authenticate, (req, res) => {
-    const id = req.params.id
-    db('users')
-      .where({id})
-      .then(user => {
-        db('tabs')
-          .where({user_id: id})
-          .then(tabs => res.status(200).json({...user[0], tabs}))
-      })
-      .catch(err  => res.status(500).json(err))
+//GET ID /id
+router.get('/:id', (req, res) => {
+  const { id } = req.params
+  Users
+  .getUser(id)
+  .then(user => {
+      res.status(200).json(user);
   })
-
-  router.get('/:id', (req, res) => {
-    const { id } = req.params
-    Users
-    .getUser(id)
-    .then(user => {
-        res.status(200).json(user);
-    })
-    .catch(error => {
-        res.status(500).json(error);
-    })
+  .catch(error => {
+      res.status(500).json(error);
+  })
 })
 
+
+//TABS GET /:id/tabs
 router.get('/:id/tabs', authenticate, (req, res) => {
     const id = req.params.id
     db('users')

@@ -13,9 +13,8 @@ module.exports = {
 // implementation details
 function authenticate(req, res, next) {
   const token = req.get('Authorization');
-
   if (token) {
-    jwt.verify(token, jwtKey, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
       if (err) return res.status(400).json(err);
 
       req.decoded = decodedToken;
@@ -30,7 +29,6 @@ function authenticate(req, res, next) {
 }
 
 function generateToken(user) {
- //   const secret = jwtKey; 
     const payload = {
       subject: user.id,
       username: user.username,
@@ -38,6 +36,8 @@ function generateToken(user) {
     const options = {
       expiresIn: '1d',
     };
-    return jwt.sign(payload, process.env.JWT_SECRET, options);
+    
+    const secret = process.env.JWT_SECRET; 
+    return jwt.sign(payload, secret, options);
   }
 

@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
+//const Tabs = require('../models/tabs-model')
+
 const db = require('../dbConfig')
 
 const { authenticate } = require('../../auth/authenticate');
 
-router.post('/', authenticate,  (req, res) => { 
-  db('tabs')
+//POST
+router.post('/', authenticate, (req, res) => { 
+  db('pages')
   .insert(req.body)
   .then(id => {
       res.status(200).json(id)
@@ -15,18 +18,19 @@ router.post('/', authenticate,  (req, res) => {
       res.status(500).json(err)
   })
 })
-
+//GET
 router.get('/', authenticate, (req, res) => {
-  db('tabs').then(action => {
+  db('pages').then(action => {
       res.status(200).json(action)
   }).catch(err => {
       res.status(500).json(err)
   })
 })
 
+//GET
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  db('tabs')
+  db('pages')
   .where({ id })
   .first()
   .then(tab => {
@@ -41,8 +45,9 @@ router.get('/:id', (req, res) => {
   })
 })
 
+//DELETE
 router.delete('/:id', authenticate,  (req, res) => {
-  db('tabs')
+  db('pages')
   .where({ id: req.params.id })
   .del()
   .then(count => {
@@ -57,8 +62,9 @@ router.delete('/:id', authenticate,  (req, res) => {
   })
 })
 
+//PUT
 router.put('/:id', authenticate, (req, res) => {
-  db('tabs')
+  db('pages')
   .where({ id: req.params.id })
   .update(req.body)
   .then(count => {
