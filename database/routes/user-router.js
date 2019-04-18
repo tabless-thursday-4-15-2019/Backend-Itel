@@ -32,16 +32,14 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-
+  //console.log(req.body); // returns username and password
   let { username, password } = req.body;
-
-Users.findBy({ username })
-    .first()
+  Users.findBy( {username} )
     .then(user => {
       //console.log(user);
       if (user && bcrypt.compareSync(password, user.password)) {
       const token = generateToken(user);
-      //console.log(user);
+      //console.log(user); //returns value
 
         res.status(200).json({
           message: `Welcome ${user.username}!`,
@@ -53,7 +51,7 @@ Users.findBy({ username })
       }
     })
     .catch(error => {
-      res.status(500).json(error);
+      res.status(500).json(error.message);
     });
 
 });

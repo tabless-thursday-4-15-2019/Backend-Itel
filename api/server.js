@@ -11,17 +11,21 @@ const bcrypt = require('bcryptjs');
 
 const userRouter = require('../database/routes/user-router');
 const tabsRouter = require('../database/routes/tabs-router');
-
+// function testMiddleware(req, res, next){
+//   console.log(req.body);
+//   next();
+// }
 
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
+
 //POSTMAN
 server.use('/api', userRouter); 
 server.use('/tabs', tabsRouter);
 
-server.get('/', (req, res) => {
+server.get('/', (req, res) => { //add between req and res the testMiddleware fn
   res.send('Sanity Check!');
 });
 
