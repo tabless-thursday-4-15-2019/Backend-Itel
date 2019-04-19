@@ -1,5 +1,3 @@
-//require("dotenv").config()
-
 const jwt = require('jsonwebtoken');
 
 //const jwtKey = process.env.JWT_SECRET;
@@ -23,7 +21,7 @@ function authenticate(req, res, next) {
     });
   } else {
     return res.status(401).json({
-      error: 'No token provided, must be set on the Authorization Header',
+      error: 'Where is your token? It must be set on the Authorization Header with Content-type',
     });
   }
 }

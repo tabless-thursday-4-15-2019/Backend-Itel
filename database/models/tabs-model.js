@@ -18,12 +18,10 @@ function getById(id) {
     .first();
 }
 
-function insert(habit) {
+function insert(tab) {
   return db('tabs')
-    .insert(habit)
-    .then(ids => {
-      return getById(ids[0]);
-    });
+  .insert(tab)
+  .returning("id")
 }
 
 function update(id, changes) {

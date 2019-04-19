@@ -4,9 +4,6 @@ const cors = require('cors');
 
 const server = express();
 
-const Users = require('../database/models/user-model')
-const Tabs = require('../database/models/tabs-model')
-
 const bcrypt = require('bcryptjs');
 
 const userRouter = require('../database/routes/user-router');

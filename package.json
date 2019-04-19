@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "test": "jest --watch --verbose"
   },
   "repository": "https://github.com/tabless-thursday-4-15-2019/Backend-Itel",
   "author": "ItelSunday <iteldomingotech@gmail.com>",

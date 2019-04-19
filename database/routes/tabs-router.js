@@ -9,7 +9,7 @@ const { authenticate } = require('../../auth/authenticate');
 
 //POST
 router.post('/', authenticate, (req, res) => { 
-  db('pages')
+  db('tabs')
   .insert(req.body)
   .then(id => {
       res.status(200).json(id)
@@ -20,7 +20,7 @@ router.post('/', authenticate, (req, res) => {
 })
 //GET
 router.get('/', authenticate, (req, res) => {
-  db('pages').then(action => {
+  db('tabs').then(action => {
       res.status(200).json(action)
   }).catch(err => {
       res.status(500).json(err)
@@ -28,9 +28,9 @@ router.get('/', authenticate, (req, res) => {
 })
 
 //GET
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticate, (req, res) => {
   const { id } = req.params;
-  db('pages')
+  db('tabs')
   .where({ id })
   .first()
   .then(tab => {
@@ -47,14 +47,14 @@ router.get('/:id', (req, res) => {
 
 //DELETE
 router.delete('/:id', authenticate,  (req, res) => {
-  db('pages')
+  db('tabs')
   .where({ id: req.params.id })
   .del()
   .then(count => {
     if (count > 0) {
-      res.status(204).end()
+      res.status(200).end()
     } else {
-      res.status(404).json({ message: 'Not Found'})
+      res.status(404).json({ message: 'Item Not Found'})
     }
   })
   .catch(err => {
@@ -64,7 +64,7 @@ router.delete('/:id', authenticate,  (req, res) => {
 
 //PUT
 router.put('/:id', authenticate, (req, res) => {
-  db('pages')
+  db('tabs')
   .where({ id: req.params.id })
   .update(req.body)
   .then(count => {

@@ -1,8 +1,14 @@
 exports.up = function(knex, Promise) {
-    return knex.schema.createTable('pages', function(tbl) {
+    return knex.schema.createTable('tabs', function(tbl) {
+
         tbl.increments();
+
         tbl.string('tab')
           .notNullable()
+
+        tbl.string('description, 200')
+          .notNullable()
+
         tbl.integer('user_id')
             .notNullable()
             .references('id')
@@ -11,5 +17,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTableIfExists('pages');
+    return knex.schema.dropTableIfExists('tabs');
 };

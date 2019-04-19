@@ -11,7 +11,6 @@ const db = require('../dbConfig')
 
 //POST /register
 router.post('/register', (req, res) => {
-
     let user = req.body
     const hash = bcrypt.hashSync(user.password, 10);
     user.password = hash;
@@ -43,6 +42,7 @@ router.post('/login', (req, res) => {
 
         res.status(200).json({
           message: `Welcome ${user.username}!`,
+          user_id: user.id, //add
           token,
           
         });
@@ -64,7 +64,7 @@ router.get('/users', (req, res) => {
   .catch(err  => res.status(500).json(err))
 } )
 
-//GET ID /id
+//GET ID /id //////////
 router.get('/:id', (req, res) => {
   const { id } = req.params
   Users
